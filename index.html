@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de PIX</title>
+    <title>Calculadora de Lucro e Estoque</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,12 +51,12 @@
 </head>
 <body>
     <div class="container">
-        <h2>Calculadora de PIX</h2>
-        <label for="valorTotal">Valor total sacado (R$):</label>
-        <input type="number" id="valorTotal" placeholder="Ex: 100">
+        <h2>Calculadora de Lucro e Estoque</h2>
+        <label for="custo">Valor gasto no estoque (R$):</label>
+        <input type="number" id="custo" placeholder="Ex: 20">
 
-        <label for="parteCaio">Parte do Caio (R$):</label>
-        <input type="number" id="parteCaio" placeholder="Ex: 50">
+        <label for="venda">Preço de venda (R$):</label>
+        <input type="number" id="venda" placeholder="Ex: 50">
 
         <button onclick="calcular()">Calcular</button>
 
@@ -65,18 +65,29 @@
 
     <script>
         function calcular() {
-            const valorTotal = parseFloat(document.getElementById("valorTotal").value);
-            const parteCaio = parseFloat(document.getElementById("parteCaio").value);
+            const custo = parseFloat(document.getElementById("custo").value);
+            const venda = parseFloat(document.getElementById("venda").value);
 
-            if (isNaN(valorTotal) || isNaN(parteCaio) || valorTotal <= 0 || parteCaio < 0) {
+            if (isNaN(custo) || isNaN(venda) || custo <= 0 || venda <= 0) {
                 document.getElementById("resultado").innerHTML = "Por favor, insira valores válidos.";
                 return;
             }
 
-            const valorParaEnviar = valorTotal - parteCaio;
+            const lucroBruto = venda - custo;
+            const adicionalEstoque = lucroBruto * 0.2; // 20% para aumentar o estoque
+            const lucroLiquido = lucroBruto - adicionalEstoque;
+            const lucroPorPessoa = lucroLiquido / 2;
+
+            // Valor que Caio deve te enviar
+            const valorParaEnviar = venda - lucroPorPessoa;
 
             document.getElementById("resultado").innerHTML = `
-                <p><strong>Valor que Caio deve te enviar:</strong> R$ ${valorParaEnviar.toFixed(2)}</p>
+                <p><strong>Resultados:</strong></p>
+                <p>Lucro Bruto: R$ ${lucroBruto.toFixed(2)}</p>
+                <p>Adicional para Estoque: R$ ${adicionalEstoque.toFixed(2)}</p>
+                <p>Lucro Líquido (para dividir): R$ ${lucroLiquido.toFixed(2)}</p>
+                <p>Lucro para cada pessoa: R$ ${lucroPorPessoa.toFixed(2)}</p>
+                <p><strong>Valor que Caio deve te mandar:</strong> R$ ${valorParaEnviar.toFixed(2)}</p>
             `;
         }
     </script>
