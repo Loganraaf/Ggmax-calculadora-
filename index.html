@@ -58,6 +58,9 @@
         <label for="venda">Preço de venda (R$):</label>
         <input type="number" id="venda" placeholder="Ex: 50">
 
+        <label for="pix">Valor total do PIX recebido pelo loginsk (R$):</label>
+        <input type="number" id="pix" placeholder="Ex: 100">
+
         <button onclick="calcular()">Calcular</button>
 
         <div class="result" id="resultado"></div>
@@ -67,8 +70,9 @@
         function calcular() {
             const custo = parseFloat(document.getElementById("custo").value);
             const venda = parseFloat(document.getElementById("venda").value);
+            const pix = parseFloat(document.getElementById("pix").value);
 
-            if (isNaN(custo) || isNaN(venda) || custo <= 0 || venda <= 0) {
+            if (isNaN(custo) || isNaN(venda) || isNaN(pix) || custo <= 0 || venda <= 0 || pix <= 0) {
                 document.getElementById("resultado").innerHTML = "Por favor, insira valores válidos.";
                 return;
             }
@@ -78,12 +82,17 @@
             const lucroLiquido = lucroBruto - estoqueAdicional;
             const lucroPorPessoa = lucroLiquido / 2;
 
+            // Cálculo do quanto seu amigo deve enviar para você
+            const minhaParte = lucroPorPessoa + estoqueAdicional;
+
             document.getElementById("resultado").innerHTML = `
                 <p><strong>Resultados:</strong></p>
                 <p>Lucro Bruto: R$ ${lucroBruto.toFixed(2)}</p>
                 <p>Adicional para Estoque: R$ ${estoqueAdicional.toFixed(2)}</p>
                 <p>Lucro Líquido (para dividir): R$ ${lucroLiquido.toFixed(2)}</p>
                 <p>Lucro para cada pessoa: R$ ${lucroPorPessoa.toFixed(2)}</p>
+                <p><strong>Valor que o loginsk deve te enviar:</strong> R$ ${minhaParte.toFixed(2)}</p>
+                <p><strong>Valor total do PIX recebido:</strong> R$ ${pix.toFixed(2)}</p>
             `;
         }
     </script>
