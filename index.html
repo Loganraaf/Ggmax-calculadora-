@@ -81,10 +81,14 @@
             // Valor que Caio deve te enviar
             const valorParaEnviar = venda - lucroPorPessoa;
 
+            // Valor total que irá para o estoque
+            const totalEstoque = custo + adicionalEstoque;
+
             document.getElementById("resultado").innerHTML = `
                 <p><strong>Resultados:</strong></p>
                 <p>Lucro Bruto: R$ ${lucroBruto.toFixed(2)}</p>
                 <p>Adicional para Estoque: R$ ${adicionalEstoque.toFixed(2)}</p>
+                <p>Valor Total para Estoque: R$ ${totalEstoque.toFixed(2)}</p>
                 <p>Lucro Líquido (para dividir): R$ ${lucroLiquido.toFixed(2)}</p>
                 <p>Lucro para cada pessoa: R$ ${lucroPorPessoa.toFixed(2)}</p>
                 <p><strong>Pix pro loginsk:</strong> R$ ${valorParaEnviar.toFixed(2)}</p>
